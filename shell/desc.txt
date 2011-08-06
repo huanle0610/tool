@@ -1,0 +1,6 @@
+关于本目录
+旨在练习shell脚本，以及一些实用的功能性脚本。
+
+desc.txt   说明文档
+httpdMonitor   可执行文件
+lib  函数库 

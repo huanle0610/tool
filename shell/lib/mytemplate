@@ -1,0 +1,47 @@
+#!/bin/bash
+# Create function template
+# create by hl(huanle0610@gmail.com)
+# load udf about  
+Useage="Useage:\n\
+	\tmytemplate functionfile_name --file/--display"
+if [ $# = 0 ];then
+	echo -e $Useage
+	exit 2
+fi
+filenames=$@
+prefix=my
+AUTHOR=hl
+AUTHOR_CONTACT=huanle0610@gmail.com
+USER=$(whoami)
+DATE=$(date +%Y-%m-%d\ %T)
+while [ $# -ge 1 ]
+do
+	case "$1" in
+	--display)
+		MODE=1
+		;;
+	--file)
+		MODE=2
+		;;
+	*)
+		MODE=0
+		;;
+	esac
+	shift
+done
+	
+if [ $MODE == 0 ];then echo -e ${Useage}&&exit 2;fi 
+for filename in $filenames
+do
+	if [ -z "$(echo $filename | grep '\-\-')" ];then
+		FUNCTION_TEMPLATE="# shell function about $filename\n\
+# Create time: ${DATE} $USER\n\
+# Update time: ${DATE}"
+		if [ "$MODE" == 1 ];then
+			echo -e $FUNCTION_TEMPLATE 
+		elif [ "$MODE" == 2 ];then
+            test -e ${prefix}${filename}&&echo file:【${prefix}${filename}】has exist  ||(echo create file:【${prefix}${filename}】&&echo -e $FUNCTION_TEMPLATE>${prefix}${filename} 2>/dev/null&&cat ${prefix}${filename}||echo 'crate file failed')
+		fi
+	fi
+done
+exit 0

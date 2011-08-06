@@ -1,0 +1,51 @@
+<html>
+<head>
+</head>
+<body>
+<div></div><div></div><div></div><br/>
+<div></div><div></div><div></div><br/>
+<div></div><div></div><div></div><br/>
+<input type="text" id="count" />
+<script language="javascript">
+//获取所有的div
+var divs = document.getElementsByTagName("div");
+var count = document.getElementById("count");
+//为这些div设置样式
+for(i=0;i<divs.length;i++){
+divs[i].style.display="inline-block" ;
+divs[i].style.width="100px" ;
+divs[i].style.height="100px" ;
+divs[i].style.borderWidth="1px" ;
+divs[i].style.borderStyle="solid" ;
+divs[i].style.borderColor="red" ;
+}
+//计数器自加
+function add(){
+if(count.value == "" ) return count.value = 1 ;
+count.value = parseInt(count.value)+1 ;
+}
+//写一个函数，让钻出的地鼠回去
+function hide(){
+for(i=0;i<divs.length;i++){
+divs[i].style.backgroundColor="#fff";
+divs[i].onclick=function(){
+return false;
+}
+}
+}
+//写一个函数，随机的钻出老鼠
+function show(){
+hide();
+var i = Math.round(Math.random()*7+1);
+divs[i].style.backgroundColor="blue" ;
+divs[i].onclick=function(){
+hide();	 add();
+}
+}
+//入口，开始打地鼠游戏
+setInterval(function(){
+show();
+},1000);
+</script>
+</body>
+</html>

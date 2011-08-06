@@ -1,0 +1,26 @@
+#!/bin/bash
+# Copyright hl(huanle0610@gmail.com)
+
+# This file is a script to monitor for httpd
+# 
+PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+#set 
+# udf dir
+MY_FUNCTION_DIR="lib"
+udf=${MY_FUNCTION_DIR}/myfunc
+# call udf
+. $udf 
+# debug mode set
+DEBUG=0
+# get argv pass 
+ARGV="$@"
+debug $ARGV
+# httpd path
+HTTPD='/usr/local/httpd/bin/httpdd'
+test -f "$HTTPD"||cred  "You must sure you have httpd and the path is right"
+now=$(now)
+echo $now 
+days=$(seconds 20110327)
+echo `days $days` 
+echo `years $days` 
+echo $(evenadd 1243&&echo 1||echo 2)

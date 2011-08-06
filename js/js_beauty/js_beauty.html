@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			js优化/美化
+		</title>
+		<meta charset='UTF-8'>
+		<style type='text/css'>
+			body{
+/*				text-align:center;*/
+			}
+			div{
+				background:#E8E8E8;
+				width:960px;
+				margin:0 auto;
+			｝
+
+		</style>
+		<script src="js/globals.js" type="text/javascript"></script>
+		<script src="js/base.js" type="text/javascript"></script>
+		<script src="js/jsformat.js" type="text/javascript"></script>
+		<script src="js/htmlformat.js" type="text/javascript"></script>
+
+		<script type="text/javascript">
+		    function S(id){
+ 			return !id ? null : document.getElementById(id);
+		    }
+		    function do_js_beautify() {
+			document.getElementById('beautify').disabled = true;
+			js_source = document.getElementById('content').value.replace(/^\s+/, '');
+			tabsize = document.getElementById('tabsize').value;
+			tabchar = ' ';
+			if (tabsize == 1) {
+			    tabchar = '\t';
+			}
+			if (js_source && js_source.charAt(0) === '<') {
+			    document.getElementById('content').value = style_html(js_source, tabsize, tabchar, 80);
+			} else {
+			    document.getElementById('content').value = js_beautify(js_source, tabsize, tabchar);
+			}
+			document.getElementById('beautify').disabled = false;
+			return false;
+		    }
+		    function pack_js(base64) {
+			var input = document.getElementById('content').value;
+			var packer = new Packer;
+			if (base64) {
+			    var output = packer.pack(input, 1, 0);
+			} else {
+			    var output = packer.pack(input, 0, 0);
+			}
+			document.getElementById('content').value = output;
+		    }
+		    function Empty() {
+			document.getElementById('content').value = '';
+			document.getElementById('content').select();
+		    }
+		    function manread(){
+				s=S('content').value;
+				var patt=new RegExp('(\'|\")([^\'\"]*%[^\'\"]*)\\1',"g");
+				var manstr='';
+				while(((r=patt.exec(s))!=null)&&(n=r.length)){
+					if(n){
+					    manstr += '\n\n\n'+unescape(r[2]);
+					}
+				}
+				S('content').value=manstr;
+				S('content').disabled=false;
+
+		    }
+		    function GetFocus() {
+			document.getElementById('content').focus();
+		    }
+		</script>
+
+
+	</head>
+	<body>
+		<div id="b_1">
+   <h1><div class="titleft"><a href="javascript:;">JavaScript/HTML格式化工具</a></div></h1>
+   <div class="box1">
+          <div align="center" style="color: rgb(0, 106, 173); font-size: 16px; font-weight: bold;">JavaScript/HTML格式化</div>
+           <div align="center" style="padding-top: 10px;">
+            <textarea rows="20" cols="20" style="width: 750px; border: 1px solid rgb(197, 226, 242); height: 300px; overflow: visible;" name="content" id="content"></textarea>
+            
+            </div>
+            <div style="padding: 7px 0px 0px 6px;">
+            <select id="tabsize" name="tabsize">
+              <option value="1">
+                制表符缩进
+              </option>
+              <option value="2">
+                2个空格缩进
+              </option>
+              <option selected="selected" value="4">
+                4个空格缩进
+              </option>
+              <option value="8">
+                8个空格缩进
+              </option>
+            </select>
+            <input type="button" id="beautify" onclick="return do_js_beautify()" value="格式化" class="but2">
+            <input type="button" onclick="pack_js(0)" value="普通压缩" class="but2">
+            <input type="button" onclick="pack_js(1)" value="加密压缩" class="but2">
+            <input type="button" onclick="manread()" value="unescapse string" class="but2">
+            <input type="button" onclick="Empty();" value="清空结果" class="but2">
+            </div>
+      </div>
+   </div>
+
+	</body>
+</html>

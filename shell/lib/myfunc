@@ -1,0 +1,76 @@
+#!/bin/bash
+# common shell function 
+# create by hl(huanle0610@gmail.com)
+# load udf about color
+# attention:You must define suitable MY_FUNCTION_DIR
+#script_full_path=$(cd "$(dirname "$0")"; pwd)
+. ${MY_FUNCTION_DIR}/mycolor
+. ${MY_FUNCTION_DIR}/mydate
+WARNNING=$(cyellow Warnning)
+ERROR=$(cred Error)
+
+# just echo if define DEBUG and not 0
+function debug(){
+        if [ -z "$DEBUG" ] || [ "$DEBUG" -eq 0 ];then
+                return
+        fi  
+        echo $@
+}
+
+function ostype(){
+#ostype():在当前操作系统中定义OSTYPE变量
+    osname=$(uname -s)
+    OSTYPE=unknow
+    case $osname in
+        'FreeBSD')
+            OSTYPE='FREEBSD'
+        ;;
+        'SunOS')
+            OSTYPE='SOLARIS'
+        ;;
+        'Linux')
+            OSTYPE='LINUX'
+        ;;
+    esac 
+    return 0
+}
+
+function isodd(){
+    #根据最后一个数字确定奇偶性
+    LAST_DIGIT=$(echo $1 | sed 's/\(.*\)\(.\)$/\2/')
+    echo $LAST_DIGIT
+    case $LAST_DIGIT in
+        0|2|4|6|8)
+        return 1
+    ;;
+    *)
+        return 0
+    ;;
+    esac
+}
+
+function istextfile(){
+#判断一个文件是否是文本类型
+    test -f $1 ||(cred "file $1 no exists or not file\n"&&return 1)
+    file $1 | awk  -F : '{printf $2 "\n"}' | grep 'text'>/dev/null&&return 0||return 1
+}
+
+function showip4(){
+    echo $(ifconfig | grep '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | grep -v '127.0.0') 
+}
+
+function recursionfile(){
+   test -e $1 ||(cred "file $1 no exists\n"&&return 1)
+   test -f $1&&(
+        #文件存在执行的操作
+        echo $1
+   )||(
+        #对目录文件进行递归
+        if [ -d $1 ];then
+            for i in $(ls $1)
+            do
+                recursionfile ${1}/${i}
+            done
+        fi
+   ) 
+}

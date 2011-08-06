@@ -1,0 +1,71 @@
+# shell function about date
+# Create time: 2011-05-15 16:59:21 huanle0610
+# Update time: 2011-05-15 16:59:21
+#
+#use:
+#	eg:now
+#	now=$(now)
+#	echo $now 
+#	now=$(now common)
+#	now=$(now ymd)
+#
+#
+function now(){
+	if [ "$1" = "common" ];then
+		cmd='date +%Y-%m-%d\t%T'
+	elif [ "$1" = "ymd" ]; then
+		cmd='date +%Y-%m-%d'
+	elif [ "$1" = "time" ];then
+		cmd='date +%T'
+	else
+		cmd='date +%s'	
+	fi
+	echo -e `$cmd`
+}
+
+function times(){
+	if [ $# = 0 ];then
+		echo "Useage:time YYYYMMDD"
+		exit 2
+	fi
+	declare -i times=$(date --date=$1 +%s)
+	echo $times
+	exit 0
+}
+#
+# calc seconds between two date 
+# if get one date;the other date is today
+#
+#
+#
+function seconds(){
+	day_1=$(times $1)
+	if [ $# = 2 ];then
+		day_2=$(times $2)
+		declare -i differ=$(($day_1-$day_2))
+		echo $differ
+		exit 0
+	fi
+	today=$(now ymd)
+	now=$(date --date="$today 00:00:00" +%s)
+	declare -i differ=$(($day_1-$now))
+	echo $differ
+	exit 0
+}
+#
+# cals seconds to days
+function days(){
+	declare -i  date_num=$(($1/86400))
+	echo $date_num
+}
+#
+#
+#days=$(seconds 20110327)
+#echo `days $days` 
+#echo `years $days` 
+# calc my heart nephew's age
+#
+function years(){
+	declare -i year_num=$(($1/(86400*365)))
+	echo $year_num
+}

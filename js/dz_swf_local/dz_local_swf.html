@@ -1,0 +1,38 @@
+<html>
+    
+    <head>
+        <meta charset='utf-8' />
+        <title>
+            Discuz camera.swf locale.xml
+        </title>
+        <style type="text/css">
+            .format{ margin:0 auto; width:400px; height:350px; border:blue 1px solid;
+            padding-top:10px; } #want{ display:block; margin:20px auto; width:350px;
+            height:200px; word }
+        </style>
+        <script>
+            function change() {
+                document.getElementById("want").value = escape(document.getElementById("comsenz").value).replace(/%u/g, "\\u");
+            }
+            function unchange() {
+                document.getElementById("want").value = unescape(document.getElementById("comsenz").value.replace(/\\u/g, "%u"));
+            }
+        </script>
+    </head>
+    
+    <body>
+        <div class='format'>
+            <center>
+                <h5>
+                    Discuz carera.swf相关文件local.xml字符翻译_rewrite_by_hl
+                    <h5>
+            </center>
+            <input type="text" id="comsenz" value="" style="width:100%;" />
+            <input type="button" value="转成看不懂的编码" onclick="change();" />
+            <input type="button" value="转成能看懂的文字" onclick="unchange();" />
+            <textarea id='want' name="t1" cols="75" rows="6" height="100">
+            </textarea>
+        </div>
+    </body>
+
+</html>

@@ -1,0 +1,107 @@
+#!/bin/bash
+#######################################################################
+#save current project and mail to snail								  
+#Attention:
+#          1,mutt,tar,mysqldump must can  be executed
+#          2,for comptible you must modify some VAR about database
+#  eg:     1,back file
+#          		./$script_name ${file_path} 
+#		   2,back project
+#		        ./$script_name
+#		        ./$scrript_name . ${db_name}
+#		   3,back dir
+#		   		./$script_name ${dir_name}
+#######################################################################
+#mail to who
+	mail_to='735064191@qq.com'
+	now=`date '+%Y-%m-%d %T'` 
+#dir of this script or assign
+if [ -n $1 ];then
+	if [ -f $1 ];then
+		mutt $mail_to -a $1 -s "${1}_@_${now}" <<EOF
+It's a file.
+auto save,powered by snail! 
+EOF
+		if [ $? -eq 0 ]
+		then 
+			echo `date '+%Y-%m-%d %T'`	Upload to $mail_to successful! >>mail.log  2>&1
+			echo 'Successfull!'
+			exit
+		else
+			echo  `date '+%Y-%m-%d %T'`	Mail failed!>>mail.log  2>&1
+			echo  "Sorry,It's failed!May be the attachment is too large!"
+			exit
+		fi
+fi
+
+	script_full_path=$(cd $1; pwd)
+else 
+	script_full_path=$(cd "$(dirname "$0")"; pwd)
+fi
+#echo "full path to currently executed script is : ${script_full_path}"
+
+#project name will be the $(dir)
+	project_name=$(basename $script_full_path)
+#echo $project_name
+
+#backup database table to file use name as :   $(project_name).sql
+if [ -n $2 ];then
+	sql_name=${2}.${project_name}.sql
+	DATA_NAME=$2
+else
+	sql_name=$(basename $script_full_path).sql
+	DATA_NAME=$project_name
+fi
+
+#database user&password&dbname
+	DATA_USER='root'
+	DATA_PASS='123456'
+
+cd $script_full_path    #chage the pwd
+######################################################
+#to compatible user hl who is unique
+who=$(whoami)
+if [ $who == 'hl' ] || [ $who == 'huanle0610' ]
+then
+	DATA_PASS='hl'
+#	DATA_NAME='test'
+fi
+######################################################
+#backup sql to pwd
+if [ -f .project ];then
+	mysqldump -u $DATA_USER -p"$DATA_PASS" $DATA_NAME>./$sql_name
+	if (test -f $sql_name)
+	then
+		echo `date '+%Y-%m-%d %T'`    backup database table successful! >>mail.log  2>&1
+	else
+		echo `date '+%Y-%m-%d %T'`	  backup database table failed! >>mail.log  2>&1
+		#don't exit
+	fi
+else
+	echo    "${now}	no project,so no database to back up!" >>mail.log 2>&1
+fi
+#desktop a link to desktop,so you must build it if you don't have!!
+#echo ${project_name}.tar.bz2
+tar jcvf  /tmp/${project_name}.tar.bz2 .  --exclude='.cvs' --exclude='.svn' --exclude='.tmp_*' --exclude='*.swp' >/tmp/list_all.log 2>&1
+if [ $? -eq 0 ]
+then
+	size=`du -h /tmp/${project_name}.tar.bz2 | awk '{print $1}'`
+	echo Filename:[ ${project_name}.tar.bz2 ] size:[ ${size} ],$mail_to,please waitting...
+	mutt $mail_to -a /tmp/${project_name}.tar.bz2 -s "${project_name}.tar.bz2_@_${now}" <<EOF 
+auto save,powered by snail! 
+EOF
+else
+	echo `date '+%Y-%m-%d %T'`  compress failed! >>mail.log  2>&1
+	exit
+fi
+if [ $? -eq 0 ]
+then 
+	echo `date '+%Y-%m-%d %T'`	Upload to $mail_to successful! >>mail.log  2>&1
+	echo 'Successfull!'
+else
+	echo  `date '+%Y-%m-%d %T'`	Mail failed!>>mail.log  2>&1
+	echo  "Sorry,It's failed!May be the attachment is too large!"
+	exit
+fi
+	
+
