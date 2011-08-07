@@ -74,3 +74,21 @@ function recursionfile(){
         fi
    ) 
 }
+# promotion when user give a option unknow
+badOptionHelp=''
+printHelpAndExit(){
+    echo -e $Usage
+    exit $1 
+}
+printErrorHelpAndExit(){
+    echo "$@"
+    printHelpAndExit 1
+}
+#
+requireParams(){
+    needParamsNum=$([ -n "${2}" ]&&echo $2||echo 1)
+    if [ "${1}" -lt ${needParamsNum} ];then
+        cred "must params\n"
+        printHelpAndExit 1
+    fi
+}
