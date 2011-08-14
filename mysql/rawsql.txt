@@ -1,0 +1,40 @@
+mysql> select concat('abc',"-def") as mn;
++---------+
+| mn      |
++---------+
+| abc-def |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select substring_index('abc-abc-ccc','-',1) as mn;
++-----+
+| mn  |
++-----+
+| abc |
++-----+
+1 row in set (0.00 sec)
+
+mysql> select substring_index('abc-abc-ccc','-',2) as mn;
++---------+
+| mn      |
++---------+
+| abc-abc |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select substring_index('abc-abc-ccc','-',3) as mn;
++-------------+
+| mn          |
++-------------+
+| abc-abc-ccc |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select instr('abc-def-hello','hel');
++------------------------------+
+| instr('abc-def-hello','hel') |
++------------------------------+
+|                            9 |
++------------------------------+
+1 row in set (0.00 sec)
+
