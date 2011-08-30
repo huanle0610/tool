@@ -2,6 +2,10 @@
 # 该脚本完成目录/文件的复制
 #其特色在于：保持了一定的目录结构，对于从一个项目中提取
 #文件而直接合并到一个新的相同目录结构的项目中是很有用。
+# Attention:
+# 其实最佳的方法是：
+# cp -a --parents source/function   ~/projectB
+# more info please man cp
 #set -x     #调试开关
 cwd=$(pwd)
 script_full_path=$(cd "$(dirname "$0")"; pwd)
@@ -12,7 +16,10 @@ Usage="Usage: \n
     \t-s: source dir\n
     \t-d: destination dir\n
     \t-p: when the destination dir not exist,you want create it\n
-    \t-h: print usage"
+    \t-h: print usage\n\t
+# 其实最佳的方法是：\n\t
+# cp -a --parents source/function   ~/projectB\n\t
+# more info please 'man cp'"
 requireParams $# 8
 
 while getopts "hs:d:p" optionName; do

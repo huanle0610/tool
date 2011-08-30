@@ -1,0 +1,37 @@
+rename is a perl script has offered by ubuntu distribution
+You can get the man from ext/man.rename
+example:
+when you want execute just remove -n
+huanle0610@huanle0610-laptop:~/tmp/tmp$ ls
+a_0.txt  a_1.txt  a_2.txt  a_3.txt  a_4.txt  a_5.txt  a_6.txt
+huanle0610@huanle0610-laptop:~/tmp/tmp$ rename -n 's/(a)(_.*)/A$2/' ./*
+./a_0.txt renamed as ./A_0.txt
+./a_1.txt renamed as ./A_1.txt
+./a_2.txt renamed as ./A_2.txt
+./a_3.txt renamed as ./A_3.txt
+./a_4.txt renamed as ./A_4.txt
+./a_5.txt renamed as ./A_5.txt
+./a_6.txt renamed as ./A_6.txt
+huanle0610@huanle0610-laptop:~/tmp/tmp$ rename -n 's/(a)(_.*)\.(.*)$/A$2.c/' ./*./a_0.txt renamed as ./A_0.c
+./a_1.txt renamed as ./A_1.c
+./a_2.txt renamed as ./A_2.c
+./a_3.txt renamed as ./A_3.c
+./a_4.txt renamed as ./A_4.c
+./a_5.txt renamed as ./A_5.c
+./a_6.txt renamed as ./A_6.c
+huanle0610@huanle0610-laptop:~/tmp/tmp$ ls
+a_0.txt   a_11.txt  a_13.txt  a_1.txt  a_3.txt  a_5.txt  a_7.txt  a_9.txt
+a_10.txt  a_12.txt  a_14.txt  a_2.txt  a_4.txt  a_6.txt  a_8.txt
+huanle0610@huanle0610-laptop:~/tmp/tmp$ rename -n 's/^(.*_)(\d{1})([^\d]*)$/${1}0$2$3/' ./*
+./a_0.txt renamed as ./a_00.txt
+./a_1.txt renamed as ./a_01.txt
+./a_2.txt renamed as ./a_02.txt
+./a_3.txt renamed as ./a_03.txt
+./a_4.txt renamed as ./a_04.txt
+./a_5.txt renamed as ./a_05.txt
+./a_6.txt renamed as ./a_06.txt
+./a_7.txt renamed as ./a_07.txt
+./a_8.txt renamed as ./a_08.txt
+./a_9.txt renamed as ./a_09.txt
+huanle0610@huanle0610-laptop:~/tmp/tmp$
+
