@@ -1,2 +1,5 @@
+# in fact,most temp files like .swp *~ has ignored by the configure of ~/.gitignore
+# but if you want commit some file, You can negate a pattern by starting it with an exclamation point (!).
+
 *.log
-!tmp/
+#!tmp
