@@ -6,10 +6,8 @@
 PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 #set 
 # udf dir
-MY_FUNCTION_DIR="lib"
-udf=${MY_FUNCTION_DIR}/myfunc
 # call udf
-. $udf 
+. calludf 
 # debug mode set
 DEBUG=0
 # get argv pass 
