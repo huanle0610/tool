@@ -1,0 +1,4 @@
+#该文件内容可以直接放入~/.bashrc,以扩展系统功能
+
+#获取公网ip
+alias getmyip="wget -q -O - checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
