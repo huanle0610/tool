@@ -2186,6 +2186,7 @@
                             if (!I && K.i !== w) {
                                 if (K.t === w) {
                                     v.innerHTML = "";
+                                    console.log(v);
                                     v.parentNode.removeChild(v);
                                     v = null;
                                     clearInterval(O)
