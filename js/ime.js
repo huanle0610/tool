@@ -1378,6 +1378,7 @@
                         I ? h.onreadystatechange = function() {
                             a && ("loaded" === this.readyState || "complete" === this.readyState) && l()
                         }: h.onload = h.onerror = l;
+                        console.log(h)
                         o.appendChild(h)
                     },
                     q = "",
@@ -2186,7 +2187,6 @@
                             if (!I && K.i !== w) {
                                 if (K.t === w) {
                                     v.innerHTML = "";
-                                    console.log(v);
                                     v.parentNode.removeChild(v);
                                     v = null;
                                     clearInterval(O)
